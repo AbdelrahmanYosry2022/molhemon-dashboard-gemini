@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { icons, homeCards, ThemeToggleButton, DashboardCard, UserProfileDropdown } from './shared';
+import { supabase } from './lib/supabase';
 
 export const DashboardHomePage = ({ onNavigate }) => {
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await supabase.from('projects').select('*').limit(1);
+      // افتح DevTools وشاهد هذا اللوج للتأكد من الاتصال
+      console.log('[supabase:projects:test]', { data, error });
+    })();
+  }, []);
   return (
     <div className="page-container home-page-container">
       {/* أيقونة الدارك مود على اليسار */}

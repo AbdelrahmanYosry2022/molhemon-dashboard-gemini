@@ -84,6 +84,166 @@
     gap: 1.5rem;
 }
 
+.projects-page {
+    position: relative;
+}
+
+.add-project-container {
+    display: flex;
+    justify-content: flex;
+    margin-top: 2rem;
+}
+
+.fab-add-project {
+    position: relative;
+    height: 48px;
+    border-radius: 9999px;
+    padding: 0 0.9rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: 1px solid transparent;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    z-index: 20;
+    overflow: hidden;
+    transition: width 0.25s ease, padding 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    width: 48px; /* دائرة افتراضياً */
+}
+
+.fab-add-project .fab-icon { display: inline-flex; }
+.fab-add-project .fab-label { 
+    white-space: nowrap; 
+    opacity: 0; 
+    transform: translateX(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fab-add-project:hover {
+    width: 150px; /* يتمدد لعرض النص */
+    padding-inline-start: 0.9rem;
+    padding-inline-end: 1rem;
+}
+
+.fab-add-project:hover .fab-label {
+    opacity: 1; 
+    transform: translateX(0);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.modal-card {
+    width: min(640px, 92vw);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.modal-title {
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.form-field span { color: var(--text-secondary); font-size: 0.95rem; }
+.form-field input, .form-field select {
+    background: var(--background-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+}
+.btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* New modal styles used by ProjectModal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+}
+
+.modal-content {
+    width: min(720px, 96vw);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1rem 1rem 1.25rem;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.modal-body { display: flex; flex-direction: column; gap: 0.9rem; }
+
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.form-label { color: var(--text-secondary); font-size: 0.95rem; }
+.form-input {
+    width: 100%;
+    background: var(--background-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+}
+
+.modal-footer { display: flex; justify-content: flex-start; gap: 0.75rem; margin-top: 1rem; }
+
 .project-card {
     background-color: var(--surface-color);
     border: 1px solid var(--border-color);
@@ -124,4 +284,15 @@
     font-size: 1rem;
     color: var(--text-secondary);
     margin-top: -0.75rem;
+}
+
+.drag-handle {
+    width: 40px;
+    text-align: center;
+    cursor: grab;
+    color: var(--text-secondary);
+}
+
+.drag-handle:hover {
+    color: var(--text-primary);
 }

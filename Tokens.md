@@ -1,0 +1,1 @@
+Supabase Access Token = sbp_45916415f4539332bf4ffb17b706252b4a08aae8

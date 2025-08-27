@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { icons, projectSidebarLinks, ThemeToggleButton } from './shared';
+import { supabase } from './lib/supabase';
 
 const ProjectSidebar = ({ onNavigate, activeTab }) => (
     <aside className="project-sidebar">
@@ -454,20 +455,144 @@ const ProjectFilesTab = ({ project }) => {
 export const ProjectDashboard = ({ project, onBack }) => {
     const [activeTab, setActiveTab] = useState('overview');
 
+    const [remoteMilestones, setRemoteMilestones] = useState(null);
+    const [remoteDeliverables, setRemoteDeliverables] = useState(null);
+    const [remoteTeamMembers, setRemoteTeamMembers] = useState(null);
+    const [remotePayments, setRemotePayments] = useState(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        async function loadRelated() {
+            if (!project?.id) return;
+            const projectId = String(project.id);
+
+            const [milestonesRes, deliverablesRes, ptmRes, paymentsRes] = await Promise.all([
+                supabase.from('milestones').select('*').eq('project_id', projectId),
+                supabase.from('deliverables').select('*').eq('project_id', projectId),
+                supabase.from('project_team_members').select('*').eq('project_id', projectId),
+                supabase.from('payments').select('*').eq('project_id', projectId)
+            ]);
+
+            if (cancelled) return;
+
+            // Map milestones
+            if (!milestonesRes.error && milestonesRes.data) {
+                const ms = milestonesRes.data.map(m => ({
+                    id: m.id,
+                    title: m.title,
+                    startDate: m.date,
+                    endDate: m.date,
+                    status: m.status || 'لم تبدأ',
+                    progress: 0
+                }));
+                setRemoteMilestones(ms);
+            } else {
+                setRemoteMilestones(null);
+            }
+
+            // Map deliverables with owner lookup
+            if (!deliverablesRes.error && deliverablesRes.data) {
+                const ownerIds = Array.from(new Set(deliverablesRes.data.map(d => d.owner_id).filter(Boolean)));
+                let ownerMap = new Map();
+                if (ownerIds.length > 0) {
+                    const owners = await supabase.from('company_team_members').select('id, name, first_name, last_name').in('id', ownerIds as string[]);
+                    if (!owners.error && owners.data) {
+                        owners.data.forEach(o => {
+                            const full = o.name || [o.first_name, o.last_name].filter(Boolean).join(' ').trim();
+                            const initials = (full || '').split(' ').map(w => w[0]).join('').slice(0, 3).toUpperCase();
+                            ownerMap.set(o.id, { name: full || '—', initials: initials || '—' });
+                        });
+                    }
+                }
+
+                const dl = deliverablesRes.data.map(d => ({
+                    id: d.id,
+                    title: d.title,
+                    responsible: ownerMap.get(d.owner_id || '') || { name: '—', initials: '—' },
+                    dueDate: d.due,
+                    type: d.type || '—',
+                    status: d.status || 'قيد الإعداد',
+                    cost: d.cost || 0,
+                    links: d.links || []
+                }));
+                setRemoteDeliverables(dl);
+            } else {
+                setRemoteDeliverables(null);
+            }
+
+            // Map project team members with person lookup
+            if (!ptmRes.error && ptmRes.data) {
+                const memberIds = Array.from(new Set(ptmRes.data.map(t => t.company_member_id).filter(Boolean)));
+                let memberMap = new Map();
+                if (memberIds.length > 0) {
+                    const members = await supabase.from('company_team_members').select('id, name, first_name, last_name').in('id', memberIds as string[]);
+                    if (!members.error && members.data) {
+                        members.data.forEach(m => {
+                            const full = m.name || [m.first_name, m.last_name].filter(Boolean).join(' ').trim();
+                            const initials = (full || '').split(' ').map(w => w[0]).join('').slice(0, 3).toUpperCase();
+                            memberMap.set(m.id, { name: full || '—', initials: initials || '—' });
+                        });
+                    }
+                }
+                const tm = ptmRes.data.map(t => ({
+                    id: t.id,
+                    member: memberMap.get(t.company_member_id) || { name: '—', initials: '—' },
+                    role: t.project_role || '—',
+                    status: t.project_status || 'نشط',
+                    joinDate: t.joined_project_date || '—',
+                    hourlyRate: t.project_hourly_rate || null,
+                    allocatedHours: t.allocated_hours || null
+                }));
+                setRemoteTeamMembers(tm);
+            } else {
+                setRemoteTeamMembers(null);
+            }
+
+            // Map payments
+            if (!paymentsRes.error && paymentsRes.data) {
+                const pm = paymentsRes.data.map(p => ({
+                    id: p.id,
+                    date: p.pay_date,
+                    type: p.type || '—',
+                    item: p.note || '—',
+                    status: p.status || 'معلق',
+                    amount: p.amount || 0,
+                    method: p.payment_method || '—'
+                }));
+                setRemotePayments(pm);
+            } else {
+                setRemotePayments(null);
+            }
+        }
+
+        loadRelated();
+        return () => { cancelled = true; };
+    }, [project?.id]);
+
+    const mergedProject = useMemo(() => {
+        return {
+            ...project,
+            milestones: remoteMilestones ?? project.milestones,
+            deliverables: remoteDeliverables ?? project.deliverables,
+            teamMembers: remoteTeamMembers ?? project.teamMembers,
+            payments: remotePayments ?? project.payments,
+        };
+    }, [project, remoteMilestones, remoteDeliverables, remoteTeamMembers, remotePayments]);
+
     const renderContent = () => {
         switch(activeTab) {
             case 'overview':
-                return <ProjectOverviewTab project={project} />;
+                return <ProjectOverviewTab project={mergedProject} />;
             case 'payments':
-                return <ProjectPaymentsTab project={project} />;
+                return <ProjectPaymentsTab project={mergedProject} />;
             case 'milestones':
-                return <ProjectMilestonesTab project={project} />;
+                return <ProjectMilestonesTab project={mergedProject} />;
             case 'deliverables':
-                return <ProjectDeliverablesTab project={project} />;
+                return <ProjectDeliverablesTab project={mergedProject} />;
             case 'team':
-                return <ProjectTeamTab project={project} />;
+                return <ProjectTeamTab project={mergedProject} />;
             case 'files':
-                return <ProjectFilesTab project={project} />;
+                return <ProjectFilesTab project={mergedProject} />;
             default:
                 return <div className="tab-content"><p>محتوى القسم: {activeTab}</p></div>;
         }
@@ -478,7 +603,7 @@ export const ProjectDashboard = ({ project, onBack }) => {
             <ProjectSidebar onNavigate={setActiveTab} activeTab={activeTab} />
             <main className="project-content">
                 <header className="page-header project-dashboard-header">
-                    <h1 className="main-heading">{project.title}</h1>
+                    <h1 className="main-heading">{mergedProject.title}</h1>
                     <div className="header-actions">
                          <button onClick={onBack} className="icon-action-button" title="العودة للمشاريع">{icons.arrowRight}</button>
                          <ThemeToggleButton />

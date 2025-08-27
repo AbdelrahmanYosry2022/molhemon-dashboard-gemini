@@ -14,14 +14,30 @@ import { homeCards } from './shared';
 import { ThemeContext } from './shared';
 
 const App = () => {
-    const [page, setPage] = useState('dashboard');
-    const [selectedProject, setSelectedProject] = useState(null);
+    const [page, setPage] = useState<string>(() => {
+        try { return localStorage.getItem('app:page') || 'dashboard'; } catch { return 'dashboard'; }
+    });
+    const [selectedProject, setSelectedProject] = useState<any>(() => {
+        try {
+            const saved = localStorage.getItem('app:selectedProject');
+            return saved ? JSON.parse(saved) : null;
+        } catch { return null; }
+    });
     const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
         document.body.className = '';
         document.body.classList.add(`${theme}-theme`);
     }, [theme]);
+
+    // Persist current page and selected project
+    useEffect(() => {
+        try {
+            localStorage.setItem('app:page', page);
+            if (selectedProject) localStorage.setItem('app:selectedProject', JSON.stringify(selectedProject));
+            else localStorage.removeItem('app:selectedProject');
+        } catch {}
+    }, [page, selectedProject]);
 
     const toggleTheme = () => {
         setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
@@ -53,6 +69,7 @@ const App = () => {
     };
 
     const handleBackToHome = () => {
+        setSelectedProject(null);
         setPage('dashboard');
     };
 

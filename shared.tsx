@@ -38,15 +38,15 @@ export const icons = {
 };
 
 export const homeCards = [
-    { id: 'projects', title: 'إدارة المشاريع', description: 'تنظيم وتنفيذ المشاريع بمرونة، تتبع المهام والمواعيد والميزانيات.', icon: icons.projects, badgeText: 'جديد', badgeType: 'new' },
-    { id: 'team', title: 'إدارة فريق العمل', description: 'إدارة الفريق وتوزيع المهام ومتابعة الأداء بسهولة.', icon: icons.team, badgeText: 'قريباً', badgeType: 'soon' },
-    { id: 'clients', title: 'قاعدة بيانات العملاء', description: 'تخزين ومتابعة بيانات العملاء والعقود وسجل التواصل.', icon: icons.clients, badgeText: 'قريباً', badgeType: 'soon' },
-    { id: 'finance', title: 'الحسابات المالية', description: 'إدارة الإيرادات والمصروفات وتقارير الرصيد والمستحقات.', icon: icons.payments, badgeText: 'جديد', badgeType: 'new' },
-    { id: 'docs', title: 'المستندات والعقود', description: 'رفع وتنظيم المستندات والعقود مع صلاحيات وبحث سريع.', icon: icons.docs, badgeText: 'قريباً', badgeType: 'soon' },
-    { id: 'reports', title: 'التقارير والإحصائيات', description: 'لوحات وتقارير فورية لقياس الأداء والميزانيات.', icon: icons.reports, badgeText: 'قريباً', badgeType: 'soon' },
-    { id: 'portfolio', title: 'حافظة الأعمال', description: 'عرض أعمالك المنجزة والحالية بصفة احترافية.', icon: icons.portfolio, badgeText: 'قريباً', badgeType: 'soon' },
-    { id: 'services', title: 'إدارة الخدمات', description: 'تعريف وتسعير خدماتك وإدارتها للعملاء.', icon: icons.services, badgeText: 'قريباً', badgeType: 'soon' },
-    { id: 'assets', title: 'إدارة الأصول', description: 'تتبع الأصول المادية والرقمية وصيانتها.', icon: icons.assets, badgeText: 'قريباً', badgeType: 'soon' },
+    { id: 'projects', title: 'إدارة المشاريع', description: 'تنظيم وتنفيذ المشاريع بمرونة، تتبع المهام والمواعيد والميزانيات.', icon: icons.projects, badgeText: 'جديد', badgeType: 'new', keyword: 'المشاريع' },
+    { id: 'team', title: 'إدارة فريق العمل', description: 'إدارة الفريق وتوزيع المهام ومتابعة الأداء بسهولة.', icon: icons.team, badgeText: 'قريباً', badgeType: 'soon', keyword: 'الفريق' },
+    { id: 'clients', title: 'قاعدة بيانات العملاء', description: 'تخزين ومتابعة بيانات العملاء والعقود وسجل التواصل.', icon: icons.clients, badgeText: 'قريباً', badgeType: 'soon', keyword: 'العملاء' },
+    { id: 'finance', title: 'الحسابات المالية', description: 'إدارة الإيرادات والمصروفات وتقارير الرصيد والمستحقات.', icon: icons.payments, badgeText: 'جديد', badgeType: 'new', keyword: 'المالية' },
+    { id: 'docs', title: 'المستندات والعقود', description: 'رفع وتنظيم المستندات والعقود مع صلاحيات وبحث سريع.', icon: icons.docs, badgeText: 'قريباً', badgeType: 'soon', keyword: 'المستندات' },
+    { id: 'reports', title: 'التقارير والإحصائيات', description: 'لوحات وتقارير فورية لقياس الأداء والميزانيات.', icon: icons.reports, badgeText: 'قريباً', badgeType: 'soon', keyword: 'التقارير' },
+    { id: 'portfolio', title: 'حافظة الأعمال', description: 'عرض أعمالك المنجزة والحالية بصفة احترافية.', icon: icons.portfolio, badgeText: 'قريباً', badgeType: 'soon', keyword: 'الأعمال' },
+    { id: 'services', title: 'إدارة الخدمات', description: 'تعريف وتسعير خدماتك وإدارتها للعملاء.', icon: icons.services, badgeText: 'قريباً', badgeType: 'soon', keyword: 'الخدمات' },
+    { id: 'assets', title: 'إدارة الأصول', description: 'تتبع الأصول المادية والرقمية وصيانتها.', icon: icons.assets, badgeText: 'قريباً', badgeType: 'soon', keyword: 'الأصول' },
 ];
 
 export const projectsData = [
@@ -241,17 +241,18 @@ export const ThemeToggleButton = () => {
     );
 };
 
-export const DashboardCard = ({ title, description, icon, badgeText, badgeType, onClick }) => (
+export const DashboardCard = ({ title, description, icon, badgeText, badgeType, keyword, onClick }) => (
     <div className="dashboard-card" role="button" tabIndex={0} aria-label={`Navigate to ${title}`} onClick={onClick}>
         <div className="card-header">
             <span className={`card-badge ${badgeType === 'new' ? 'badge-new' : 'badge-soon'}`}>{badgeText}</span>
-            <div className="card-icon">{icon}</div>
         </div>
+        <div className="card-icon">{icon}</div>
         <div className="card-content">
             <h3 className="card-title">{title}</h3>
             <p className="card-description">{description}</p>
         </div>
         <div className="card-arrow">{icons.arrowRight}</div>
+        <div className="card-keyword">{keyword}</div>
     </div>
 );
 

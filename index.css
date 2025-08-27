@@ -1,0 +1,277 @@
+:root {
+  --font-family: 'Rubik', sans-serif;
+
+  --light-background: #F9FAFB;
+  --light-surface: #FFFFFF;
+  --light-primary: #10B981;
+  --light-primary-hover: #059669;
+  --light-primary-soft-bg: #ECFDF5;
+  --light-primary-soft-text: #065F46;
+  --light-text-primary: #1F2937;
+  --light-text-secondary: #6B7280;
+  --light-border: #E5E7EB;
+  --light-badge-new-bg: #E0F2FE;
+  --light-badge-new-text: #0284C7;
+  --light-badge-soon-bg: #F3F4F6;
+  --light-badge-soon-text: #4B5563;
+  --light-input-bg: #FFFFFF;
+
+
+  --dark-background: #030712;
+  --dark-surface: #111827;
+  --dark-primary: #10B981;
+  --dark-primary-hover: #059669;
+  --dark-primary-soft-bg: rgba(16, 185, 129, 0.1);
+  --dark-primary-soft-text: #34D399;
+  --dark-text-primary: #F9FAFB;
+  --dark-text-secondary: #9CA3AF;
+  --dark-border: #374151;
+  --dark-badge-new-bg: #0c4a6e;
+  --dark-badge-new-text: #7dd3fc;
+  --dark-badge-soon-bg: #374151;
+  --dark-badge-soon-text: #D1D5DB;
+  --dark-input-bg: #1F2937;
+}
+
+.light-theme {
+  --background-color: var(--light-background);
+  --surface-color: var(--light-surface);
+  --primary-color: var(--light-primary);
+  --primary-hover-color: var(--light-primary-hover);
+  --primary-soft-bg: var(--light-primary-soft-bg);
+  --primary-soft-text: var(--light-primary-soft-text);
+  --text-primary: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --border-color: var(--light-border);
+  --badge-new-bg: var(--light-badge-new-bg);
+  --badge-new-text: var(--light-badge-new-text);
+  --badge-soon-bg: var(--light-badge-soon-bg);
+  --badge-soon-text: var(--light-badge-soon-text);
+  --input-bg: var(--light-input-bg);
+}
+
+.dark-theme {
+  --background-color: var(--dark-background);
+  --surface-color: var(--dark-surface);
+  --primary-color: var(--dark-primary);
+  --primary-hover-color: var(--dark-primary-hover);
+  --primary-soft-bg: var(--dark-primary-soft-bg);
+  --primary-soft-text: var(--dark-primary-soft-text);
+  --text-primary: var(--dark-text-primary);
+  --text-secondary: var(--dark-text-secondary);
+  --border-color: var(--dark-border);
+  --badge-new-bg: var(--dark-badge-new-bg);
+  --badge-new-text: var(--dark-badge-new-text);
+  --badge-soon-bg: var(--dark-badge-soon-bg);
+  --badge-soon-text: var(--dark-badge-soon-text);
+  --input-bg: var(--dark-input-bg);
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-family);
+}
+
+#root, #app-container {
+  width: 100%;
+}
+
+/* Global Component Styles that can be used everywhere */
+.page-container {
+    padding: 2rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.main-heading {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sub-heading {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.control-button {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-button.primary-action {
+    background-color: var(--primary-color);
+    color: white;
+}
+.control-button.primary-action:hover {
+    background-color: var(--primary-hover-color);
+    color: white;
+}
+
+.table-container {
+    background-color: var(--surface-color);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.projects-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+}
+
+.projects-table th,
+.projects-table td {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.projects-table thead {
+    background-color: var(--background-color);
+}
+
+.projects-table th {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.projects-table tbody tr {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.projects-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.projects-table tbody tr:hover {
+    background-color: var(--background-color);
+}
+
+.projects-table td {
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+.empty-table-message {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.status-badge {
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-button {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+.action-button:hover {
+    background-color: var(--background-color);
+    color: var(--text-primary);
+}
+.action-button.action-delete:hover {
+    color: #EF4444;
+}
+
+.icon-action-button {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+}
+
+.icon-action-button:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.content-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

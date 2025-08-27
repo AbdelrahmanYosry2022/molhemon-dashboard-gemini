@@ -1,0 +1,357 @@
+.project-dashboard-layout {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+.project-sidebar {
+    width: 280px;
+    background-color: var(--surface-color);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  background-color: var(--primary-soft-bg);
+  color: var(--primary-soft-text);
+  font-weight: 700;
+}
+.nav-link.active svg {
+    color: var(--primary-soft-text);
+}
+
+.project-content {
+    flex-grow: 1;
+    padding: 2rem 3rem;
+    overflow-y: auto;
+}
+
+.project-dashboard-header .main-heading {
+    margin-left: auto;
+}
+
+.content-area {
+    margin-top: 1rem;
+}
+
+.tab-content {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Overview Tab */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-card-value.progress-value {
+    color: var(--primary-color);
+}
+
+.overview-main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.content-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project-description p {
+    line-height: 1.8;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.team-list .team-member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.team-list .team-member:last-child { border-bottom: none; }
+.team-member-name { font-weight: 600; font-size: 1.05rem; }
+.team-member-role { color: var(--text-secondary); }
+
+/* Payments Tab */
+.secondary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.secondary-stat-card {
+    background-color: var(--primary-soft-bg);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    text-align: center;
+}
+.light-theme .secondary-stat-card {
+     border: 1px solid var(--light-primary-soft-text);
+}
+
+.secondary-stat-card .stat-card-title {
+    color: var(--primary-soft-text);
+    font-size: 1rem;
+}
+
+.secondary-stat-card .stat-card-value {
+    color: var(--primary-soft-text);
+    font-size: 1.75rem;
+}
+.payment-status-paid { background-color: #D1FAE5; color: #065F46; }
+.dark-theme .payment-status-paid { background-color: #064e3b; color: #d1fae5; }
+
+.payment-status-pending { background-color: #FEF9C3; color: #713F12; }
+.dark-theme .payment-status-pending { background-color: #713f12; color: #fef9c3; }
+
+.payment-status-overdue { background-color: #FEE2E2; color: #991B1B; }
+.dark-theme .payment-status-overdue { background-color: #7f1d1d; color: #fee2e2; }
+
+/* Filter Bar */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    flex-grow: 1;
+}
+
+.search-input svg {
+    color: var(--text-secondary);
+}
+
+.search-input input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    width: 100%;
+}
+.search-input input::placeholder {
+    color: var(--text-secondary);
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.date-filter, .filter-controls select {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+/* Milestones Tab */
+.milestones-tab-content h3 {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.milestones-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.milestone-item {
+    background-color: var(--background-color);
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+.milestone-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.milestone-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.milestone-date {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+.milestone-status-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: 250px;
+}
+.milestone-status-progress .progress-bar-container {
+    flex-grow: 1;
+}
+
+.milestone-status-completed { background-color: #D1FAE5; color: #065F46; }
+.dark-theme .milestone-status-completed { background-color: #064e3b; color: #d1fae5; }
+.milestone-status-in-progress { background-color: #FEF3C7; color: #92400E; }
+.dark-theme .milestone-status-in-progress { background-color: #78350f; color: #fef3c7; }
+.milestone-status-not-started { background-color: #F3F4F6; color: #4B5563; }
+.dark-theme .milestone-status-not-started { background-color: #374151; color: #D1D5DB; }
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.tab-header h3 {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.content-card > .tab-header {
+    margin: -1.5rem -1.5rem 1.5rem;
+    padding: 1.5rem;
+}
+
+.member-cell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-soft-bg);
+    color: var(--primary-soft-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.deliverable-status-progress { background-color: #FEF9C3; color: #713F12; }
+.dark-theme .deliverable-status-progress { background-color: #713f12; color: #fef9c3; }
+.deliverable-status-review { background-color: #DBEAFE; color: #1E40AF; }
+.dark-theme .deliverable-status-review { background-color: #1e3a8a; color: #dbeafe; }
+.deliverable-status-approved { background-color: #D1FAE5; color: #065F46; }
+.dark-theme .deliverable-status-approved { background-color: #064e3b; color: #d1fae5; }
+.deliverable-status-rejected { background-color: #FEE2E2; color: #991B1B; }
+.dark-theme .deliverable-status-rejected { background-color: #7f1d1d; color: #fee2e2; }
+
+.team-status-active { background-color: #D1FAE5; color: #065F46; }
+.dark-theme .team-status-active { background-color: #064e3b; color: #d1fae5; }
+.team-status-completed { background-color: #E5E7EB; color: #374151; }
+.dark-theme .team-status-completed { background-color: #374151; color: #d1d5db; }
+.team-status-suspended { background-color: #FEF3C7; color: #92400E; }
+.dark-theme .team-status-suspended { background-color: #78350f; color: #fef3c7; }
+
+/* Files Tab */
+.files-tab-content .content-card {
+    margin-bottom: 2rem;
+}
+.files-tab-content .content-card:last-child {
+    margin-bottom: 0;
+}
+.file-cell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.file-icon {
+    color: var(--text-secondary);
+}
+.contract-status-active { background-color: #D1FAE5; color: #065F46; }
+.dark-theme .contract-status-active { background-color: #064e3b; color: #d1fae5; }
+.contract-status-expired { background-color: #FEE2E2; color: #991B1B; }
+.dark-theme .contract-status-expired { background-color: #7f1d1d; color: #fee2e2; }
+.contract-status-review { background-color: #FEF9C3; color: #713F12; }
+.dark-theme .contract-status-review { background-color: #713f12; color: #fef9c3; }

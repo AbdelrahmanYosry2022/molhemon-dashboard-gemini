@@ -1,0 +1,17 @@
+.coming-soon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 80vh;
+}
+.coming-soon-content .main-heading {
+    justify-content: center;
+}
+.coming-soon-content .control-button {
+    margin-top: 2rem;
+    padding: 0.8rem 1.6rem;
+}
+.coming-soon-content .control-button span {
+    font-size: 1.1rem;
+}
